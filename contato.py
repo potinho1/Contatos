@@ -1,3 +1,43 @@
+from os import execle
+
+
+def salvar_contatos(lista):
+    arquivo = open("contatos.txt", "w")
+
+    for contato in lista:
+        '''
+        nome/email/telefone
+        '''
+        arquivo.write(
+            f"{contato['nome']}#{contato['email']}#{contato['tel']}\n")
+
+    arquivo.close()
+
+
+def carregar_contatos():
+    lista = []
+
+    try:
+        arquivo = open("contatos.txt", "r")
+
+        for linha in arquivo.readlines():
+            coluna = linha.strip().split("#")
+
+            contato = {
+                "email": coluna[1],
+                "nome": coluna[0],
+                "tel": coluna[2],
+            }
+
+            lista.append(contato)
+
+        arquivo.close()
+    except FileNotFoundError:
+        pass
+
+    return lista
+
+
 def existe_contato(lista, email):
 
     if len(lista) > 0:
@@ -50,7 +90,7 @@ def listar():
 
 def principal():
 
-    lista = []  # Inicializando a lista vazia
+    lista = carregar_contatos()  # Inicializando a lista de contatos
 
     while True:
         print("=== Agenda telefônica ===")
@@ -64,14 +104,17 @@ def principal():
 
         if opcao == 1:
             adicionar(lista)
+            salvar_contatos(lista)
         elif opcao == 2:
             alterar()
+            salvar_contatos(lista)
         elif opcao == 3:
             excluir()
+            salvar_contatos(lista)
         elif opcao == 4:
             buscar()
         elif opcao == 5:
-            listar()
+            listar(lista)
         elif opcao == 6:
             print("Finalizando...")
             break
