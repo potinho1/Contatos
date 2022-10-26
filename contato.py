@@ -73,8 +73,29 @@ def alterar():
     pass
 
 
-def excluir():
-    pass
+def excluir(lista):
+    print("== Excluir Contatos ==")
+    if len(lista) > 0:
+        email = input("Digite o e-mail do contato a ser excluído: ")
+        if existe_contato(lista, email):
+            print("O contato foi encontardo. As informações seguem abaixo:")
+            for i, contato in enumerate(lista):
+                if contato['email'] == email:
+                    print(f"Nome: {contato['nome']}")
+                    print(f"Email: {contato['email']}")
+                    print(f"Telefone: {contato['tel']}")
+                    print("=" * 20)
+                    print("\n")
+
+                    del lista[i]
+
+                    print("O contato foi apagado com sucesso! \n")
+
+        else:
+            print(
+                f"Não existe contato cadastrado no sistema com esse e-mail {email}. \n ")
+    else:
+        print("Não existe nenhum cadastrado no sistema")
 
 
 def buscar(lista):
@@ -83,7 +104,7 @@ def buscar(lista):
         email = input("Digite o e-mail do contato a ser encontrado: ")
         if existe_contato(lista, email):
             print("O contato foi encontardo. As informações seguem abaixo:")
-            for contato in (lista):
+            for contato in lista:
                 if contato['email'] == email:
                     print(f"Nome: {contato['nome']}")
                     print(f"Email: {contato['email']}")
@@ -133,7 +154,7 @@ def principal():
             alterar()
             salvar_contatos(lista)
         elif opcao == 3:
-            excluir()
+            excluir(lista)
             salvar_contatos(lista)
         elif opcao == 4:
             buscar(lista)
