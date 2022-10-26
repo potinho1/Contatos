@@ -1,12 +1,10 @@
-def salvar_contatos(lista):
-    arquivo = open("contatos.txt", "w")
+import pickle
 
-    for contato in lista:
-        '''
-        nome/email/telefone
-        '''
-        arquivo.write(
-            f"{contato['nome']}#{contato['email']}#{contato['tel']}\n")
+
+def salvar_contatos(lista):
+    arquivo = open("contatos.bin", "wb")
+
+    pickle.dump(lista, arquivo)
 
     arquivo.close()
 
@@ -15,18 +13,9 @@ def carregar_contatos():
     lista = []
 
     try:
-        arquivo = open("contatos.txt", "r")
+        arquivo = open("contatos.bin", "rb")
 
-        for linha in arquivo.readlines():
-            coluna = linha.strip().split("#")
-
-            contato = {
-                "email": coluna[1],
-                "nome": coluna[0],
-                "tel": coluna[2],
-            }
-
-            lista.append(contato)
+        lista = pickle.load(arquivo)
 
         arquivo.close()
     except FileNotFoundError:
