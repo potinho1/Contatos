@@ -1,6 +1,3 @@
-from os import execle
-
-
 def salvar_contatos(lista):
     arquivo = open("contatos.txt", "w")
 
@@ -80,12 +77,39 @@ def excluir():
     pass
 
 
-def buscar():
-    pass
+def buscar(lista):
+    print("== Buscar Contato ==")
+    if len(lista) > 0:
+        email = input("Digite o e-mail do contato a ser encontrado: ")
+        if existe_contato(lista, email):
+            print("O contato foi encontardo. As informações seguem abaixo:")
+            for contato in (lista):
+                if contato['email'] == email:
+                    print(f"Nome: {contato['nome']}")
+                    print(f"Email: {contato['email']}")
+                    print(f"Telefone: {contato['tel']}")
+                    print("=" * 20)
+                    print("\n")
+
+        else:
+            print(
+                f"Não existe contato cadastrado no sistema com esse e-mail {email}. \n ")
+    else:
+        print("Não existe nenhum cadastrado no sistema")
 
 
-def listar():
-    pass
+def listar(lista):
+    print("== Lista Contatos ==")
+    if len(lista) > 0:
+        for i, contato in enumerate(lista):
+            print(f"Contato {i+1}")
+            print(f"/tNome: {contato['nome']}")
+            print(f"/tEmail: {contato['email']}")
+            print(f"/tTelefone: {contato['tel']}")
+            print("=" * 40)
+        print(f"Quantidade de Contatos: {len(lista)}")
+    else:
+        print("Não existe nenhum cadastrado no sistema")
 
 
 def principal():
@@ -112,7 +136,7 @@ def principal():
             excluir()
             salvar_contatos(lista)
         elif opcao == 4:
-            buscar()
+            buscar(lista)
         elif opcao == 5:
             listar(lista)
         elif opcao == 6:
